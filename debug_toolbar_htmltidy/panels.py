@@ -82,10 +82,15 @@ class HTMLTidyDebugPanel(DebugPanel):
         document, errors = self.log_data
         lines = self.src_content.split("\n")
 
+        from django.conf import settings
+
+        static_url = getattr(settings, "STATIC_URL", "")
+
         context.update({
         'document': document,
         'lines': zip(range(1, len(lines) + 1), lines),
         'errors': self.appearance(errors),
+        'STATIC_URL':static_url,
         })
 
         return render_to_string(\
